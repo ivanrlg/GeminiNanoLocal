@@ -1,4 +1,3 @@
-
 # GeminiNanoLocal
 
 Welcome to the GeminiNanoLocal project! This application demonstrates how to interact with the Gemini Nano AI model in a web environment. Users can input text and receive real-time responses from the AI model, making the experience interactive and dynamic.
