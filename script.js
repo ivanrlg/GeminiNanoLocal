@@ -3,7 +3,7 @@ let selectedMode = 'normal';
 
 document.querySelectorAll('.mode-button').forEach(button => {
     button.addEventListener('click', () => {
-        selectedMode = button.getAttribute('data-mode');
+        selectedMode = button.getAttribute('data-mode') || 'normal';
         document.querySelectorAll('.mode-button').forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
         
@@ -12,7 +12,7 @@ document.querySelectorAll('.mode-button').forEach(button => {
     });
 });
 
-document.getElementById('prompt').addEventListener('input', () => {
+document.getElementById('prompt')?.addEventListener('input', () => {
     clearTimeout(timeout);
     timeout = setTimeout(sendPrompt, 500); // Delay in milliseconds
 });
@@ -52,6 +52,10 @@ async function sendPrompt() {
                 responseDiv.appendChild(scrollDiv);
                 scrollDiv.scrollIntoView({ behavior: 'smooth' });
             }
+
+            // Wait a bit to ensure the stream has finished
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
             const endTime = new Date().getTime();
             const responseTime = endTime - startTime;
             responseTimeDiv.textContent = `${responseTime}ms`;
@@ -78,7 +82,7 @@ function updateClock() {
     document.getElementById('date').textContent = dateString;
 
     const userAgent = navigator.userAgent;
-    const chromeVersion = userAgent.match(/Chrome\/[\d.]+/)[0];
+    const chromeVersion = userAgent.match(/Chrome\/[\d.]+/)?.[0] || 'Chrome/unknown';
     document.getElementById('browser-info').textContent = chromeVersion;
 }
 
