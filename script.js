@@ -73,7 +73,25 @@ function updateClock() {
     const seconds = String(now.getSeconds()).padStart(2, '0');
     const timeString = `${hours}:${minutes}:${seconds} PM`;
     document.getElementById('clock').textContent = timeString;
+    
+    const dateString = now.toDateString();
+    document.getElementById('date').textContent = dateString;
+
+    const userAgent = navigator.userAgent;
+    const chromeVersion = userAgent.match(/Chrome\/[\d.]+/)[0];
+    document.getElementById('browser-info').textContent = chromeVersion;
+}
+
+async function getIPAddress() {
+    try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        document.getElementById('ip-address').textContent = `IP Address: ${data.ip}`;
+    } catch (error) {
+        console.error('Error fetching IP address:', error);
+    }
 }
 
 setInterval(updateClock, 1000);
 updateClock(); // Initial call to set the clock immediately
+getIPAddress(); // Fetch IP address on load
