@@ -8,12 +8,24 @@
 </head>
 <body>
     <div class="container">
-        <h1>Gemini Nano Prompt API</h1>
-        <textarea id="prompt" placeholder="Write your question here..."></textarea>
-        <button id="submit">Submit</button>
-        <div id="response"></div>
+        <div class="header">
+            <div id="clock"></div>
+        </div>
+        <div class="input-section">
+            <div class="buttons">
+                <button class="mode-button" data-mode="normal">Normal</button>
+                <button class="mode-button" data-mode="german">German</button>
+                <button class="mode-button" data-mode="slang">Slang</button>
+                <button class="mode-button" data-mode="grammar">Grammar</button>
+            </div>
+            <textarea id="prompt" placeholder="Write your question here..."></textarea>
+        </div>
+        <div id="response-section">
+            <div id="response-time"></div>
+            <div id="response"></div>
+        </div>
         <footer>
-            <p><a href="https://ivansingleton.dev/about-me/" target="_blank">About Me =)</a></p>
+            <p>More about me: <a href="https://ivansigleton.dev" target="_blank">ivansigleton.dev</a></p>
         </footer>
     </div>
     <script src="script.js"></script>
