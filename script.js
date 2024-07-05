@@ -1,5 +1,6 @@
 let timeout;
 let selectedMode = 'normal';
+const promptQueue = [];
 
 document.querySelectorAll('.mode-button').forEach(button => {
     button.addEventListener('click', () => {
@@ -7,7 +8,8 @@ document.querySelectorAll('.mode-button').forEach(button => {
         document.querySelectorAll('.mode-button').forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
         
-        // Send prompt again when mode is changed
+        // Clear queue and send prompt again when mode is changed
+        promptQueue.length = 0; 
         sendPrompt();
     });
 });
@@ -17,8 +19,25 @@ document.getElementById('prompt')?.addEventListener('input', () => {
     timeout = setTimeout(sendPrompt, 500); // Delay in milliseconds
 });
 
-async function sendPrompt() {
-    const prompt = document.getElementById('prompt').value;
+function enqueuePrompt(prompt) {
+    return new Promise(resolve => {
+        promptQueue.push({ prompt, resolve });
+        if (promptQueue.length === 1) {
+            processQueue();
+        }
+    });
+}
+
+async function processQueue() {
+    while (promptQueue.length > 0) {
+        const { prompt, resolve } = promptQueue[0];
+        await handlePrompt(prompt);
+        promptQueue.shift();
+        resolve();
+    }
+}
+
+async function handlePrompt(prompt) {
     const responseDiv = document.getElementById('response');
     const responseTimeDiv = document.getElementById('response-time');
     
@@ -60,14 +79,18 @@ async function sendPrompt() {
             const responseTime = endTime - startTime;
             responseTimeDiv.textContent = `${responseTime}ms`;
         } else {
-            responseDiv.textContent = 'Cannot create text session.';
-            responseTimeDiv.textContent = '';
+            throw new Error('Cannot create text session.');
         }
     } catch (error) {
         console.error(error);
         responseDiv.textContent = 'Error: ' + error.message;
         responseTimeDiv.textContent = '';
     }
+}
+
+async function sendPrompt() {
+    const prompt = document.getElementById('prompt').value;
+    await enqueuePrompt(prompt);
 }
 
 function updateClock() {
