@@ -79,8 +79,7 @@ async function handlePrompt(prompt) {
             const responseTime = endTime - startTime;
             responseTimeDiv.textContent = `${responseTime}ms`;
         } else {
-            responseDiv.textContent = 'Cannot create text session.';
-            responseTimeDiv.textContent = '';
+            throw new Error('Cannot create text session.');
         }
     } catch (error) {
         console.error(error);

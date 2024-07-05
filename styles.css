@@ -1,3 +1,4 @@
+/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -10,6 +11,7 @@ body {
     flex-direction: column;
 }
 
+/* Contenedor principal */
 .container {
     background-color: white;
     padding: 20px;
@@ -23,6 +25,7 @@ body {
     align-items: center;
 }
 
+/* Cabecera */
 .header {
     font-size: 24px;
     font-weight: bold;
@@ -34,6 +37,7 @@ body {
     font-weight: bold;
 }
 
+/* Sección de entrada */
 .input-section {
     width: 100%;
     position: sticky;
@@ -80,11 +84,11 @@ textarea {
     background-color: #0056b3;
 }
 
+/* Sección de respuesta */
 #response-section {
     margin-top: 20px;
     width: 100%;
-    max-height: 400px;
-    overflow-y: auto;
+    text-align: left; /* Alinear texto a la izquierda */
 }
 
 #response-time {
@@ -94,13 +98,8 @@ textarea {
 
 #response {
     margin-top: 20px;
-    padding: 10px;
-    background-color: #e9ecef;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    white-space: pre-wrap; /* Ensures new lines are preserved */
-    text-align: left;
     font-size: 36px;
+    white-space: pre-wrap; /* Ensures new lines are preserved */
 }
 
 footer {
